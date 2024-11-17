@@ -1,0 +1,11 @@
+D:\verlet_cs\bin\Release\net8.0\publish\verlet_cs.exe
+D:\verlet_cs\bin\Release\net8.0\publish\verlet_cs.dll
+D:\verlet_cs\bin\Release\net8.0\publish\verlet_cs.deps.json
+D:\verlet_cs\bin\Release\net8.0\publish\verlet_cs.runtimeconfig.json
+D:\verlet_cs\bin\Release\net8.0\publish\verlet_cs.pdb
+D:\verlet_cs\bin\Release\net8.0\publish\Raylib-cs.dll
+D:\verlet_cs\bin\Release\net8.0\publish\runtimes\linux-x64\native\libraylib.so
+D:\verlet_cs\bin\Release\net8.0\publish\runtimes\osx-arm64\native\libraylib.dylib
+D:\verlet_cs\bin\Release\net8.0\publish\runtimes\osx-x64\native\libraylib.dylib
+D:\verlet_cs\bin\Release\net8.0\publish\runtimes\win-x64\native\raylib.dll
+D:\verlet_cs\bin\Release\net8.0\publish\runtimes\win-x86\native\raylib.dll
