@@ -20,3 +20,4 @@ D:\verlet_cs\obj\Release\net8.0\refint\verlet_cs.dll
 D:\verlet_cs\obj\Release\net8.0\verlet_cs.pdb
 D:\verlet_cs\obj\Release\net8.0\verlet_cs.genruntimeconfig.cache
 D:\verlet_cs\obj\Release\net8.0\ref\verlet_cs.dll
+D:\verlet_cs\obj\Release\net8.0\verlet_cs.sourcelink.json

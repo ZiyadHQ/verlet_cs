@@ -142,7 +142,7 @@ internal class Program
             if (Raylib.IsKeyReleased(KeyboardKey.LeftControl))
             {
                 listOfConstraints.Clear();
-                int polygonCount = 3;
+                int polygonCount = 2;
                 for (int i = 0; i < list.Count - (polygonCount - 1); i += polygonCount + 1)
                 {
                     for (int j = 0; j < polygonCount; j++)
@@ -151,14 +151,17 @@ internal class Program
                     }
                     listOfConstraints.Add(new Constraint(list[i], list[i + polygonCount], list[i].radius + list[i + polygonCount].radius + 4f));
                 }
-                // for (int i = 0; i < list.Count - 1; i++)
-                // {
-                //     listOfConstraints.Add(new Constraint(list[i], list[i + 1], list[i].radius + list[i + 1].radius + 1f));
-                // }
-
+            }
+            if (Raylib.IsKeyReleased(KeyboardKey.Up))
+            {
+                camera.Zoom--;
+            }
+            if (Raylib.IsKeyReleased(KeyboardKey.Down))
+            {
+                camera.Zoom++;
             }
 
-            int subSteps = 2;
+            int subSteps = 4;
             for (int i = 0; i < subSteps; i++)
             {
                 float sub_dt = dt/subSteps;
@@ -172,8 +175,8 @@ internal class Program
 
                 foreach (VerletObject obj in list)
                 {
-                    obj.applyForce(new(0f, 250f));
-                    obj.pullBack(center, 350f);
+                    // obj.applyForce(new(0f, 250f));
+                    // obj.pullBack(center, 350f);
                     obj.step(sub_dt, 1);
                 }
             }
@@ -181,7 +184,7 @@ internal class Program
 
             Raylib.DrawCircleV(Raylib.GetMousePosition(), 10f, Color.Red);
 
-            Raylib.DrawText($"frame time: {timer.Elapsed}\nObject Count: {list.Count}", 0, 0, 24, Color.DarkGreen);
+            Raylib.DrawText($"frame time: {timer.Elapsed}\nObject Count: {list.Count}\ncamera: {camera.Zoom}", 0, 0, 24, Color.DarkGreen);
             timer.Reset();
             Raylib.EndDrawing();
             Raylib.EndMode2D();
