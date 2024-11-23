@@ -66,4 +66,52 @@ public static class MathEX
 
     }
 
+    public static VerletObject spawnNewBox(List<VerletObject> listOfObjects, List<Constraint> listOfConstraints, Vector2 position, float size)
+    {
+
+        VerletObject topLeft = new()
+        {
+            position_current = position + new Vector2(-size, -size),
+            position_old = position + new Vector2(-size, -size),
+            color = Color.Red,
+            radius = 0.1f,
+        };
+        VerletObject topRight = new()
+        {
+            position_current = position + new Vector2(size, -size),
+            position_old = position + new Vector2(size, -size),
+            color = Color.Red,
+            radius = 0.1f,
+        };
+        VerletObject bottomLeft = new()
+        {
+            position_current = position + new Vector2(-size, size),
+            position_old = position + new Vector2(-size, size),
+            color = Color.Red,
+            radius = 0.1f,
+        };
+        VerletObject bottomRight = new()
+        {
+            position_current = position + new Vector2(size, size),
+            position_old = position + new Vector2(size, size),
+            color = Color.Red,
+            radius = 0.1f,
+        };
+
+        listOfObjects.Add(topLeft);
+        listOfObjects.Add(topRight);
+        listOfObjects.Add(bottomLeft);
+        listOfObjects.Add(bottomRight);
+
+        listOfConstraints.Add(new Constraint(topLeft, topRight, 0.2f + size));
+        listOfConstraints.Add(new Constraint(topRight, bottomRight, 0.2f + size));
+        listOfConstraints.Add(new Constraint(bottomRight, bottomLeft, 0.2f + size));
+        listOfConstraints.Add(new Constraint(bottomLeft, topLeft, 0.2f + size));
+
+        float diagonal = size * MathF.Sqrt(2);
+        listOfConstraints.Add(new Constraint(topLeft, bottomRight, 0.2f + diagonal));
+
+        return topLeft;
+    }
+
 }

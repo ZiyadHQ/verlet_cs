@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("verlet_cs")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b0cd229000319c703336bfad7afd24642472432a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a5e8cb94047afde705245f7e3411921e4c541ee0")]
 [assembly: System.Reflection.AssemblyProductAttribute("verlet_cs")]
 [assembly: System.Reflection.AssemblyTitleAttribute("verlet_cs")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -6,7 +6,7 @@ using Raylib_cs;
 internal class Program
 {
     public static Random random = new();
-    public static void shootProjectile(List<VerletObject> list, Vector2 position, Vector2 direction)
+    public static void shootProjectile(List<VerletObject> list, List<Constraint> listOfConstraints, Vector2 position, Vector2 direction)
     {
         Color[] colors =
         [
@@ -21,13 +21,23 @@ internal class Program
             position_old = position,
             color = colors[random.Next(colors.Length)]
         };
+        VerletObject obj2 = new()
+        {
+            position_current = position + new Vector2(10, 10),
+            position_old = position,
+            color = colors[random.Next(colors.Length)]
+        };
         // obj.radius += random.NextSingle() * 5f;
 
         Raylib.DrawCircleLinesV(position, 10f, Color.Brown);
 
         obj.applyForce(direction * 10000f);
+        obj2.applyForce(direction + new Vector2(1, 1) * 10000f);
+
+        // MathEX.spawnNewBox(list, listOfConstraints, position, 20f).applyForce(direction * 10000f);
 
         list.Add(obj);
+        list.Add(obj2);
     }
 
     public static void resolveCollisions(List<VerletObject> list, int steps = 1)
@@ -69,6 +79,8 @@ internal class Program
 
     private static void Main(string[] args)
     {
+
+        int drawDepth = 0;
 
         Vector2 center = new(640, 300);
 
@@ -115,11 +127,11 @@ internal class Program
             }
             if (Raylib.IsKeyDown(KeyboardKey.Space))
             {
-                shootProjectile(list, center, GenerateRandomNormal());
+                shootProjectile(list, listOfConstraints, center, GenerateRandomNormal());
             }
             if (Raylib.IsKeyReleased(KeyboardKey.Q))
             {
-                shootProjectile(list, center, GenerateRandomNormal());
+                shootProjectile(list, listOfConstraints, center, GenerateRandomNormal());
             }
             if (Raylib.IsMouseButtonDown(MouseButton.Left))
             {
@@ -139,26 +151,41 @@ internal class Program
                 direction = Vector2.Normalize(direction);
                 obj.applyForce(direction * 1000f);
             }
-            if (Raylib.IsKeyReleased(KeyboardKey.LeftControl))
+            if(Raylib.IsKeyReleased(KeyboardKey.One))
             {
-                listOfConstraints.Clear();
-                int polygonCount = 2;
-                for (int i = 0; i < list.Count - (polygonCount - 1); i += polygonCount + 1)
-                {
-                    for (int j = 0; j < polygonCount; j++)
-                    {
-                        listOfConstraints.Add(new Constraint(list[i + j], list[i + j + 1], list[i + j].radius + list[i + j + 1].radius + 4f));
-                    }
-                    listOfConstraints.Add(new Constraint(list[i], list[i + polygonCount], list[i].radius + list[i + polygonCount].radius + 4f));
-                }
+                // QuadTreeRoot qTree = new(list, 0, Raylib.GetScreenWidth(), 0, Raylib.GetScreenHeight(), depth: 3);
+                // Console.WriteLine("\nStart of qTree:");
+                // Console.WriteLine(qTree);
             }
+            if(Raylib.IsKeyDown(KeyboardKey.Two))
+            {
+                // QuadTreeRoot qTree = new(list, 0, Raylib.GetScreenWidth(), 0, Raylib.GetScreenHeight(), depth: 3);
+                // qTree.draw();
+            }
+            if(Raylib.IsKeyDown(KeyboardKey.Three))
+            {
+                // QuadTreeRoot qTree = new(list, 0, Raylib.GetScreenWidth(), 0, Raylib.GetScreenHeight(), depth: 3);
+                // // qTree.draw(drawDepth);
+                // // qTree.drawMidPoints();
+                // Raylib.DrawCircleV(qTree.leaves[drawDepth].getMidPoint(), 5f, Color.Red);
+                // Console.WriteLine(qTree.leaves[drawDepth].FindSpatialNeighbors(qTree).Count);
+                // // Console.WriteLine(qTree.leaves.Count);
+                // // qTree.drawMidPoints();
+                // foreach(QuadTree neighbor in qTree.leaves[drawDepth].FindSpatialNeighbors(qTree))
+                // {
+                //     Raylib.DrawCircleV(neighbor.getMidPoint(), 5f, Color.Red);
+                // }
+            }
+
             if (Raylib.IsKeyReleased(KeyboardKey.Up))
             {
                 camera.Zoom--;
+                drawDepth++;
             }
             if (Raylib.IsKeyReleased(KeyboardKey.Down))
             {
                 camera.Zoom++;
+                drawDepth--;
             }
 
             int subSteps = 4;
@@ -175,8 +202,8 @@ internal class Program
 
                 foreach (VerletObject obj in list)
                 {
-                    // obj.applyForce(new(0f, 250f));
-                    // obj.pullBack(center, 350f);
+                    obj.applyForce(new(0f, 250f));
+                    obj.pullBack(center, 350f);
                     obj.step(sub_dt, 1);
                 }
             }
@@ -184,7 +211,7 @@ internal class Program
 
             Raylib.DrawCircleV(Raylib.GetMousePosition(), 10f, Color.Red);
 
-            Raylib.DrawText($"frame time: {timer.Elapsed}\nObject Count: {list.Count}\ncamera: {camera.Zoom}", 0, 0, 24, Color.DarkGreen);
+            Raylib.DrawText($"frame time: {timer.Elapsed}\nObject Count: {list.Count}\ndrawDepth: {drawDepth}", 0, 0, 24, Color.DarkGreen);
             timer.Reset();
             Raylib.EndDrawing();
             Raylib.EndMode2D();
